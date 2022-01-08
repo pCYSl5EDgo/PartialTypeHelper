@@ -28,23 +28,22 @@ public readonly struct NamespaceTemplate
         builder.AppendLine("}");
     }
 
-    public ref struct Util
+    public ref struct Scope
     {
-        private readonly StringBuilder builder;
-        private readonly NamespaceTemplate parent;
-
+        public readonly StringBuilder Builder;
+        public readonly NamespaceTemplate Template;
         public readonly int Indent;
         
-        public Util(StringBuilder builder, INamespaceSymbol? symbol)
+        public Scope(StringBuilder builder, INamespaceSymbol? symbol)
         {
-            parent = new(symbol);
-            this.builder = builder;
-            Indent = parent.Open(builder);
+            Builder = builder;
+            Template = new(symbol);
+            Indent = Template.Open(Builder);
         }
 
         public void Dispose()
         {
-            parent.Close(builder);
+            Template.Close(Builder);
         }
     }
 }

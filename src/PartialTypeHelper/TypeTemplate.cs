@@ -27,23 +27,23 @@ public struct TypeTemplate
         while (template is not null);
     }
 
-    public ref struct Util
+    public ref struct Scope
     {
-        private readonly StringBuilder builder;
-        private readonly TypeTemplate parent;
-        private readonly int indent;
+        public readonly StringBuilder Builder;
+        public readonly TypeTemplate Template;
+        public readonly int Indent;
 
-        public Util(StringBuilder builder, INamedTypeSymbol symbol, int indent)
+        public Scope(StringBuilder builder, INamedTypeSymbol symbol, int indent)
         {
-            this.builder = builder;
-            this.indent = indent;
-            parent = new(symbol);
-            parent.Open(builder, indent);
+            Builder = builder;
+            Indent = indent;
+            Template = new(symbol);
+            Template.Open(Builder, Indent);
         }
 
         public void Dispose()
         {
-            parent.Close(builder, indent);
+            Template.Close(Builder, Indent);
         }
     }
 }

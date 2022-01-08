@@ -44,8 +44,8 @@ namespace System.Runtime.CompilerServices
         {
             builder.Clear();
             {
-                using var ns = new NamespaceTemplate.Util(builder, type.ContainingNamespace);
-                using var t = new TypeTemplate.Util(builder, type, ns.Indent);
+                using var ns = new NamespaceTemplate.Scope(builder, type.ContainingNamespace);
+                using var t = new TypeTemplate.Scope(builder, type, ns.Indent);
             }
 
             var x = builder.ToString();
