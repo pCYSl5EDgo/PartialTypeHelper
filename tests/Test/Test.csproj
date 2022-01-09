@@ -21,6 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\PartialTypeHelper\PartialTypeHelper.csproj" />
+    <ProjectReference Include="..\..\src\PartialTypeHelper\PartialTypeHelper.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 </Project>

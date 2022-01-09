@@ -1,6 +1,0 @@
-partial <#if (Type.IsValueType && Type.IsRecord) {#>record struct<#} else if (Type.IsValueType) {#>struct<#} else if (Type.IsRecord) {#>record<#} else {#>class<#}#> <#= Type.Name #><#if (Type.TypeParameters.Length != 0) {#><<#= Type.TypeParameters[0].ToDisplayString() #><#for (int i = 1; i < Type.TypeParameters.Length; ++i) {#>, <#= Type.TypeParameters[i].ToDisplayString() #><#}#>><#}#>
-
-{
-<#if (Child is not null) {
-    Child.TransformAppend(builder, indent + 4);
-}#>
