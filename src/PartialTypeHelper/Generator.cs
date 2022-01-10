@@ -136,7 +136,7 @@ namespace PartialTypeHelper
 
     internal readonly struct TypeTemplate
     {
-        private readonly TypeOpenTemplate Template;
+        internal readonly TypeOpenTemplate Template;
 
         internal TypeTemplate(global::Microsoft.CodeAnalysis.INamedTypeSymbol symbol)
         {

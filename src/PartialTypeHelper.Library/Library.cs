@@ -1,16 +1,16 @@
 namespace PartialTypeHelper
 {
-    internal readonly struct NamespaceTemplate
+    public readonly struct NamespaceTemplate
     {
-        internal readonly string? Namespace;
+        public readonly string? Namespace;
     
-        internal NamespaceTemplate(global::Microsoft.CodeAnalysis.INamespaceSymbol? symbol)
+        public NamespaceTemplate(global::Microsoft.CodeAnalysis.INamespaceSymbol? symbol)
         {
             Namespace = symbol?.ToDisplayString();
         }
     
         /// <return>Indent space count.</return>
-        internal int Open(global::System.Text.StringBuilder builder)
+        public int Open(global::System.Text.StringBuilder builder)
         {
             if (Namespace is null)
             {
@@ -23,45 +23,45 @@ namespace PartialTypeHelper
             return 4;
         }
     
-        internal void Close(global::System.Text.StringBuilder builder)
+        public void Close(global::System.Text.StringBuilder builder)
         {
             builder.AppendLine("}");
         }
     
-        internal ref struct Scope
+        public ref struct Scope
         {
-            internal readonly global::System.Text.StringBuilder Builder;
-            internal readonly NamespaceTemplate Template;
-            internal readonly int Indent;
+            public readonly global::System.Text.StringBuilder Builder;
+            public readonly NamespaceTemplate Template;
+            public readonly int Indent;
             
-            internal Scope(global::System.Text.StringBuilder builder, global::Microsoft.CodeAnalysis.INamespaceSymbol? symbol)
+            public Scope(global::System.Text.StringBuilder builder, global::Microsoft.CodeAnalysis.INamespaceSymbol? symbol)
             {
                 Builder = builder;
                 Template = new(symbol);
                 Indent = Template.Open(Builder);
             }
     
-            internal void Dispose()
+            public void Dispose()
             {
                 Template.Close(Builder);
             }
         }
     }
 
-    internal sealed class TypeOpenTemplate
+    public sealed class TypeOpenTemplate
     {
-        internal readonly global::Microsoft.CodeAnalysis.INamedTypeSymbol Type;
-        internal readonly TypeOpenTemplate? Child;
-        internal readonly int ChildDepth;
+        public readonly global::Microsoft.CodeAnalysis.INamedTypeSymbol Type;
+        public readonly TypeOpenTemplate? Child;
+        public readonly int ChildDepth;
 
-        internal TypeOpenTemplate(global::Microsoft.CodeAnalysis.INamedTypeSymbol type, TypeOpenTemplate? child, int childDepth)
+        public TypeOpenTemplate(global::Microsoft.CodeAnalysis.INamedTypeSymbol type, TypeOpenTemplate? child, int childDepth)
         {
             Type = type;
             Child = child;
             ChildDepth = childDepth;
         }
 
-        internal static TypeOpenTemplate Create(global::Microsoft.CodeAnalysis.INamedTypeSymbol symbol)
+        public static TypeOpenTemplate Create(global::Microsoft.CodeAnalysis.INamedTypeSymbol symbol)
         {
             var template = new TypeOpenTemplate(symbol, null, 0);
             while (symbol.ContainingType is {} container)
@@ -73,7 +73,7 @@ namespace PartialTypeHelper
             return template;
         }
 
-        internal void TransformAppend(global::System.Text.StringBuilder builder, int indent)
+        public void TransformAppend(global::System.Text.StringBuilder builder, int indent)
         {
             if (indent > 0) builder.Append(' ', indent);
             builder.Append(@"partial ");
@@ -118,22 +118,22 @@ namespace PartialTypeHelper
         }
     }
 
-    internal readonly struct TypeTemplate
+    public readonly struct TypeTemplate
     {
-        private readonly TypeOpenTemplate Template;
+        public readonly TypeOpenTemplate Template;
 
-        internal TypeTemplate(global::Microsoft.CodeAnalysis.INamedTypeSymbol symbol)
+        public TypeTemplate(global::Microsoft.CodeAnalysis.INamedTypeSymbol symbol)
         {
             Template = TypeOpenTemplate.Create(symbol);
         }
 
-        internal int Open(global::System.Text.StringBuilder builder, int indent)
+        public int Open(global::System.Text.StringBuilder builder, int indent)
         {
             Template.TransformAppend(builder, indent);
             return (Template.ChildDepth << 2) + indent + 4;
         }
 
-        internal void Close(global::System.Text.StringBuilder builder, int indent)
+        public void Close(global::System.Text.StringBuilder builder, int indent)
         {
             var template = Template;
             do
@@ -145,13 +145,13 @@ namespace PartialTypeHelper
             while (template is not null);
         }
 
-        internal ref struct Scope
+        public ref struct Scope
         {
-            internal readonly global::System.Text.StringBuilder Builder;
-            internal readonly TypeTemplate Template;
-            internal readonly int Indent;
+            public readonly global::System.Text.StringBuilder Builder;
+            public readonly TypeTemplate Template;
+            public readonly int Indent;
 
-            internal Scope(global::System.Text.StringBuilder builder, global::Microsoft.CodeAnalysis.INamedTypeSymbol symbol, int indent)
+            public Scope(global::System.Text.StringBuilder builder, global::Microsoft.CodeAnalysis.INamedTypeSymbol symbol, int indent)
             {
                 Builder = builder;
                 Indent = indent;
@@ -159,7 +159,7 @@ namespace PartialTypeHelper
                 Template.Open(Builder, Indent);
             }
 
-            internal void Dispose()
+            public void Dispose()
             {
                 Template.Close(Builder, Indent);
             }
