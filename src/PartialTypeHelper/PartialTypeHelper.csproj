@@ -1,45 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<OutputType>library</OutputType>
 		<IsRoslynComponent>true</IsRoslynComponent>
 		<DevelopmentDependency>true</DevelopmentDependency>
-		<TargetFramework>netstandard2.0</TargetFramework>
-		<LangVersion>10</LangVersion>
-		<Nullable>enable</Nullable>
-		<Deterministic>true</Deterministic>
-		<Authors>pCYSl5EDgo</Authors>
-		<Copyright>pCYSl5EDgo</Copyright>
-		<RootNamespace>PartialTypeHelper</RootNamespace>
-		<RepositoryUrl>https://github.com/pCYSl5EDgo/$(RootNamespace)</RepositoryUrl>
 		<PackageId>$(RootNamespace)</PackageId>
-		<IsPackable>true</IsPackable>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<IncludeBuildOutput>false</IncludeBuildOutput>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
-		<Version>0.0.4</Version>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" PrivateAssets="all" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<!-- Package the generator in the analyzer directory of the nuget package -->
 		<None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-		<None Include="..\..\README.md" Pack="true" PackagePath="\" Visible="false" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Using Include="System" />
-		<Using Include="System.Text" />
-		<Using Include="Microsoft.CodeAnalysis" />
-		<Using Include="Microsoft.CodeAnalysis.CSharp" />
-		<Using Include="Microsoft.CodeAnalysis.CSharp.Syntax" />
 	</ItemGroup>
 </Project>

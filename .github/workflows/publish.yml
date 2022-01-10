@@ -15,5 +15,11 @@ jobs:
           dotnet-version: 6.0.x
       - uses: rohith/publish-nuget@v2
         with:
+          VERSION_FILE_PATH: src/Directory.Build.props
           PROJECT_FILE_PATH: src/PartialTypeHelper/PartialTypeHelper.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      - uses: rohith/publish-nuget@v2
+        with:
+          VERSION_FILE_PATH: src/Directory.Build.props
+          PROJECT_FILE_PATH: src/PartialTypeHelper.Library/PartialTypeHelper.Library.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
