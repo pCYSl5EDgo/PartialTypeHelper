@@ -170,9 +170,8 @@ namespace PartialTypeHelper
             internal Scope(global::System.Text.StringBuilder builder, global::Microsoft.CodeAnalysis.INamedTypeSymbol symbol, int indent)
             {
                 Builder = builder;
-                Indent = indent;
                 Template = new(symbol);
-                Template.Open(Builder, Indent);
+                Indent = Template.Open(Builder, indent);
             }
 
             internal void Dispose()
